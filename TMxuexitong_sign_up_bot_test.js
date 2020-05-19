@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 var profile = {
-    time: "2020-05-15T18:35:00",//设置开始时间，时间格式： "YYYY-MM-DDTHH:mm:ss"。举例：假设课堂开始时间为 739年2月2日2时2分2秒，必须写成 "0739-02-02T02:02:02"
+    time: "2020-05-18T13:40:00",//设置开始时间，时间格式： "YYYY-MM-DDTHH:mm:ss"。举例：假设课堂开始时间为 739年2月2日2时2分2秒，必须写成 "0739-02-02T02:02:02"
     duration: false,//持续检查时间（单位：分钟），在持续时间内不断检查，针对老师课间检查学生是否在线而发起二次签到的情况，没有此情况填写false，即代表默认持续时间（40分钟）
     refresh_frequency: false,//检查签到任务列表的时间间隔（单位：分钟），false代表默认检查间隔（2分钟）
     pageURL: "https://mobilelearn.chaoxing.com/widget/pcpick/stu/index?courseId=206931780&jclassId=13952640",//目标课程的签到页面url，注意：用双引号 "" 括起来。举例: "https://www.example.com/path?name=zhang_san"
@@ -30,7 +30,9 @@ function getFinishTime () {//返回课程结束时间
 
 function action () {
     let list = document.getElementById('startList')
-    if (list.childElementCount !== 0) {
+    if (!list) {
+        setTimeout(redirection,15000)
+    } else if (list.childElementCount !== 0) {
         let sign_ele = list.firstElementChild.firstElementChild
         sign_ele.click()
     } else {redirection()}
