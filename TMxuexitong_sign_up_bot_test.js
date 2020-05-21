@@ -55,13 +55,13 @@ function check_profile () {
     if (document.location.href === profile.pageURL && 0 <= getRemainingTime()) {
         console.log("页面打开，程序正在运行，在签到完成前不要关闭此页面，注意网络连接。")
         setTimeout(redirection,getRemainingTime())
-    } else if (document.location.href !== profile.pageURL && Date.now() <= getFinishTime()) {
+    } else if (document.location.href !== profile.pageURL && Date.parse(profile.time) < Date.now() && Date.now() <= getFinishTime()) {
         console.log(`15秒后重新定向到签到页面`)
         setTimeout(redirection,15000)
-    } else if (document.location.href === profile.pageURL && Date.now() <= getFinishTime()) {
+    } else if (document.location.href === profile.pageURL && Date.parse(profile.time) < Date.now() && Date.now() <= getFinishTime()) {
         console.log(`${profile.refresh_frequency}分钟后重新检查签到页面`)
         setTimeout(action,min2sec(profile.refresh_frequency))
     } else {
-        console.log("程序运行结束")
+        console.log("程序静默")
     }
 })();
